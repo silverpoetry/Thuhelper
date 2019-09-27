@@ -13,18 +13,22 @@
        
         Background="Transparent"
         >
+   
     <StackPanel HorizontalAlignment="Stretch"   Loaded="Grid_Loaded">
 
         <TextBlock FontFamily="华文行楷" FontWeight="Bold"  x:Name="txt1" VerticalAlignment="Top" HorizontalAlignment="Right" 
                    FontSize="60" MouseUp="Txt1_MouseUp" Background="#01FFFFFF">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="20"/>
+            </TextBlock.Effect>
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="1,0.5"  MappingMode="RelativeToBoundingBox" StartPoint="0,0.5">
-                    <GradientStop Color="#FF5B5A5C" Offset="0"/>
-                    <GradientStop Color="#FF353636" Offset="1"/>
-                    <GradientStop Color="#FFC17551" Offset="0.538"/>
+                    <GradientStop Color="#FF5F5F5D" Offset="0"/>
+                    <GradientStop Color="#FF6B6B69" Offset="1"/>
+                    <GradientStop Color="#FFE0E0DF" Offset="0.517"/>
                 </LinearGradientBrush>
             </TextBlock.Foreground>asdas</TextBlock>
-        <Grid Opacity="0" x:Name="grd1" >
+        <Grid Opacity="1" x:Name="grd1" >
             <Rectangle RadiusX="30" RadiusY="30" Opacity="0.5" Height="500" Margin="0,50,0,0">
 
                 <Rectangle.Fill>
@@ -34,6 +38,7 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
+            <TextBlock Margin="0,0,50,0" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Name="txttime">sdfsdf</TextBlock>
         </Grid>
     </StackPanel>
 

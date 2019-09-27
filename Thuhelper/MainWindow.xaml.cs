@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -16,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Windows.Interop;
+using System.IO;
 
 namespace Thuhelper
 {
@@ -68,7 +72,17 @@ namespace Thuhelper
 
     }
 
+    struct Event
+    {
+      public  string Name;
+        public int Xingqi;
+        public string Classroom;
+        public DateTime StartTime;
+        public DateTime EndTime;
 
+
+    }
+    
 
 
     /// <summary>
@@ -77,89 +91,100 @@ namespace Thuhelper
     public partial class MainWindow : Window
     {
 
+        Event[] events= new Event[1000];
 
-        [DllImport("user32", EntryPoint = "SetWindowLong")]
-        public static extern int SetWindowLongA(int hwnd, int nIndex, int dwNewLong);
+       
         public MainWindow()
         {
             InitializeComponent();
+            
            
         }
-        //protected override CreateParams CreateParams
-        //{
-        //    get
-        //    {
-        //        const int WS_EX_TOOLWINDOW = 0x00000080;
 
-        //        CreateParams result = base.CreateParams;
-               
-        //        result.ExStyle = result.ExStyle | WS_EX_TOOLWINDOW;
-        //        return result;
-        //    }
-        //}
-
-
+        [DllImport("user32", EntryPoint = "SetWindowLong")]
+        public static extern int SetWindowLongA(int hwnd, int nIndex, int dwNewLong);
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-         
 
+            #region Layout
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - this.ActualWidth - 10;
             this.Top = 10;
 
             const int WS_EX_TOOLWINDOW = 0x00000080;
             SetWindowLongA(new WindowInteropHelper(this).Handle.ToInt32(), -20, WS_EX_TOOLWINDOW);
-         
+
+
+
+            #endregion
+            #region 加载
             TimeSpan tt = DateTime.Now - new DateTime(2019, 9, 8);
-            
-            this.txt1.Text = "第"+((int)tt.TotalDays/7+1).ToString()+"周";
+            this.txt1.Text = "第" + ((int)tt.TotalDays / 7 + 1).ToString() + "周";
+
+
             Timer t = new Timer(100);
-           t.Elapsed += (a,b) =>{
-               #region 失败的尝试
-               //      string s = GetForeWinText();
-               //;
-               //      if (s == "MainWindow" || s == "Program Manager"||s=="") { this.Dispatcher.Invoke(() => { txt1.Text =this.IsVisible.ToString();   }); }
-               //      else
-               //      {
+            t.Elapsed += (a, b) => {
+                #region 失败的尝试
+                //      string s = GetForeWinText();
+                //;
+                //      if (s == "MainWindow" || s == "Program Manager"||s=="") { this.Dispatcher.Invoke(() => { txt1.Text =this.IsVisible.ToString();   }); }
+                //      else
+                //      {
 
-               //          this.Dispatcher.Invoke(() =>
-               //          {
-               //              txt1.Text = this.IsVisible.ToString();
-               //              this.Topmost = false;
+                //          this.Dispatcher.Invoke(() =>
+                //          {
+                //              txt1.Text = this.IsVisible.ToString();
+                //              this.Topmost = false;
 
-               //          });
-               //      }
-               #endregion
-            
-               this.Dispatcher.Invoke(
-                   () =>
-                   {
-                     
+                //          });
+                //      }
+                #endregion
 
-                      
-                       if (WindowHelpser.GetForeWinText().Trim() == "" && WindowHelpser.GetWindowHeight()>500)
-                       {
-                          // System.Threading.Thread.Sleep(300);
+                this.Dispatcher.Invoke(
+                    () =>
+                    {
+
+                        txttime.Text = DateTime.Now.ToShortDateString();
+
+                        if (WindowHelpser.GetForeWinText().Trim() == "" && WindowHelpser.GetWindowHeight() > 500)
+                        {
+                           // System.Threading.Thread.Sleep(300);
                            if (WindowHelpser.GetForeWinText().Trim() == "")
-                           {
-                               this.Show();
-                               this.Topmost = true;
-                               this.Topmost = false;
-                           }
-                          
-                       }
-                   
-                       
+                            {
+                                this.Show();
+                                this.Topmost = true;
+                                this.Topmost = false;
+                            }
+
+                        }
 
 
-                   }
-                   );
 
 
-                
-              
-           };
+                    }
+                    );
+
+
+
+
+            };
             t.Start();
+            #endregion
+            var  lst= File.ReadLines("info.thu") ;
+            string[] s = lst.ToArray();
+            int n = 0;
+            for (int i = 0; i < s.Length; i+=6)
+            {
+                events[++n].Name = s[i];
+                events[n].Xingqi = int.Parse(s[i + 1]);
+                
+                events[n].StartTime= events[n].StartTime.AddHours (int.Parse(s[i + 2].Split(':')[0]));
+                events[n].StartTime= events[n].StartTime.AddMinutes(int.Parse(s[i + 2].Split(':')[1]));
+                events[n].EndTime= events[n].EndTime.AddHours(int.Parse(s[i + 3].Split(':')[0]));
+                events[n].EndTime=events[n].EndTime.AddMinutes(int.Parse(s[i + 3].Split(':')[1]));
+                events[n].Classroom = s[i + 4];
+            
+            }
 
         }
         bool state = true;
