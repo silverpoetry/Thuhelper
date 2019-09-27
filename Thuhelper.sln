@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thuhelper", "Thuhelper\Thuhelper.csproj", "{DCE3430C-913D-4A87-A0DC-3E6E927A60C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCE3430C-913D-4A87-A0DC-3E6E927A60C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE3430C-913D-4A87-A0DC-3E6E927A60C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE3430C-913D-4A87-A0DC-3E6E927A60C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE3430C-913D-4A87-A0DC-3E6E927A60C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CEC63BE5-4C90-4E5D-B871-5D3060B15800}
+	EndGlobalSection
+EndGlobal
