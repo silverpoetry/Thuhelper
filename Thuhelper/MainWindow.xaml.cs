@@ -82,8 +82,57 @@ namespace Thuhelper
 
 
     }
-    
 
+    /// <summary>
+    /// 可触摸滚动的ScrollViewer控件
+    /// </summary>
+    public class TouchableScrollViewer : ScrollViewer
+    {
+        //触摸点的坐标
+        Point _startPosition;
+        //滚动条当前位置
+        double _startVerticalOffset;
+        double _startHorizontalOffset;
+        public TouchableScrollViewer()
+        {
+            TouchDown += TouchableScrollViewer_TouchDown;
+
+            TouchUp += TouchableScrollViewer_TouchUp;
+        }
+        private void TouchableScrollViewer_TouchDown(object sender, TouchEventArgs e)
+        {
+            //添加触摸移动监听
+            TouchMove -= TouchableScrollViewer_TouchMove;
+            TouchMove += TouchableScrollViewer_TouchMove;
+
+            //获取ScrollViewer滚动条当前位置
+            _startVerticalOffset = VerticalOffset;
+            _startHorizontalOffset = HorizontalOffset;
+
+            //获取相对于ScrollViewer的触摸点位置
+            TouchPoint point = e.GetTouchPoint(this);
+            _startPosition = point.Position;
+        }
+
+        private void TouchableScrollViewer_TouchUp(object sender, TouchEventArgs e)
+        {
+            //注销触摸移动监听
+            TouchMove -= TouchableScrollViewer_TouchMove;
+        }
+
+        private void TouchableScrollViewer_TouchMove(object sender, TouchEventArgs e)
+        {
+            //获取相对于ScrollViewer的触摸点位置
+            TouchPoint endPoint = e.GetTouchPoint(this);
+            //计算相对位置
+            double diffOffsetY = endPoint.Position.Y - _startPosition.Y;
+            double diffOffsetX = endPoint.Position.X - _startPosition.X;
+            
+            //ScrollViewer滚动到指定位置(指定位置=起始位置-移动的偏移量，滚动方向和手势方向相反)
+            ScrollToVerticalOffset(_startVerticalOffset - diffOffsetY);
+            ScrollToHorizontalOffset(_startHorizontalOffset - diffOffsetX);
+        }
+    }
 
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -186,6 +235,17 @@ namespace Thuhelper
             
             }
 
+            var ee = (from a in events where (a.Xingqi==7?0:a.Xingqi) == (int)(DateTime.Now.DayOfWeek) select a);
+
+            foreach (var item in ee)
+            {
+                EveItem eee = new EveItem();
+                eee.Eventname = item.Name;
+                eee.Eventtime = $"{item.StartTime.ToString("hh:mm")}~{item.EndTime.ToString("hh:mm")}";
+                stk.Children.Add(eee);
+                eee.Classroom = item.Classroom;
+            }
+            
         }
         bool state = true;
         private void Txt1_MouseUp(object sender, MouseButtonEventArgs e)
@@ -206,6 +266,11 @@ namespace Thuhelper
             state = !state;
 
            
+        }
+
+        private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
