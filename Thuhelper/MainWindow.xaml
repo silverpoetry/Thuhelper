@@ -28,8 +28,9 @@
                     <GradientStop Color="#FFE0E0DF" Offset="0.517"/>
                 </LinearGradientBrush>
             </TextBlock.Foreground>asdas</TextBlock>
-        <Grid Opacity="0" x:Name="grd1" >
-            <Rectangle RadiusX="30" RadiusY="30" Opacity="0.5" Height="500" Margin="0,50,0,0">
+        <Grid Opacity="1" x:Name="grd1" >
+            
+            <Rectangle MouseUp="Rectangle_MouseUp"    RadiusX="30" RadiusY="30" Opacity="0.5" Height="500" Margin="0,50,0,0">
 
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -39,9 +40,9 @@
                 </Rectangle.Fill>
             </Rectangle>
             <TextBlock Margin="0,0,50,0" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Name="txttime">sdfsdf</TextBlock>
-            <ScrollViewer Margin="0,50,0,0" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" PanningMode="VerticalFirst"  Height="500" VerticalScrollBarVisibility="Hidden">
+            <ScrollViewer Name="scv" Margin="0,50,0,0" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" PanningMode="VerticalFirst"  Height="500" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Vertical" Name="stk">
-                   
+                    <Button Name="btn_timer" Background="Transparent" FontSize="40" Click="Button_Click"     Height="100" >Timer</Button>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

@@ -140,7 +140,7 @@ namespace Thuhelper
     public partial class MainWindow : Window
     {
 
-        Event[] events= new Event[1000];
+        Event[] events=new Event[1000];
 
        
         public MainWindow()
@@ -169,7 +169,8 @@ namespace Thuhelper
             #region 加载
             TimeSpan tt = DateTime.Now - new DateTime(2019, 9, 8);
             this.txt1.Text = "第" + ((int)tt.TotalDays / 7 + 1).ToString() + "周";
-
+            grd1.Opacity = 0;
+            scv.ScrollToVerticalOffset (btn_timer.Height);
 
             Timer t = new Timer(100);
             t.Elapsed += (a, b) => {
@@ -221,6 +222,7 @@ namespace Thuhelper
             #endregion
             var  lst= File.ReadLines("info.thu") ;
             string[] s = lst.ToArray();
+            
             int n = 0;
             for (int i = 0; i < s.Length; i+=6)
             {
@@ -235,7 +237,7 @@ namespace Thuhelper
             
             }
 
-            var ee = (from a in events where (a.Xingqi==7?0:a.Xingqi) == (int)(DateTime.Now.DayOfWeek) select a);
+            var ee = (from a in events where getxq(a.Xingqi) == (int)(DateTime.Now.DayOfWeek) select a);
 
             foreach (var item in ee)
             {
@@ -267,10 +269,30 @@ namespace Thuhelper
 
            
         }
-
+        int getxq(int n )
+        {
+            if (n == 7) return 0;
+            if (n == 0) return -1;
+                return n;
+        }
         private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+       
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Txt1_MouseUp(null, null);
+            TImer t = new TImer();
+            t.Show();
+        
+
         }
     }
 }
