@@ -57,8 +57,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes.cs" />
     <Compile Include="Inputbox.xaml.cs">
       <DependentUpon>Inputbox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenCapture.xaml.cs">
+      <DependentUpon>ScreenCapture.xaml</DependentUpon>
     </Compile>
     <Compile Include="TImer.xaml.cs">
       <DependentUpon>TImer.xaml</DependentUpon>
@@ -86,6 +90,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ScreenCapture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TImer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

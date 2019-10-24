@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        Title="TImer" Height="1000" Width="800"
+        Title="TImer" Height="533" Width="800"
         ShowInTaskbar="False"
         
       
@@ -18,8 +18,8 @@
 
     <StackPanel HorizontalAlignment="Stretch"   >
 
-        <Grid Loaded="Grd1_Loaded" Opacity="1" x:Name="grd1" >
-            <Rectangle Name="rtBg" RadiusX="30" RadiusY="30" Opacity="0.5"  Margin="0,50,0,0" MouseMove="Rectangle_MouseMove">
+        <Grid Loaded="Grd1_Loaded" Opacity="1" x:Name="grd1" Height="533" >
+            <Rectangle Name="rtBg" RadiusX="0" RadiusY="0" Opacity="0.8"  Margin="0,0,0,0" MouseMove="Rectangle_MouseMove">
 
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -28,7 +28,7 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock x:Name="ssss" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="70" Margin="0,197,0,272" Text="00:00" >
+            <TextBlock x:Name="ssss" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="70" Margin="309,169,309,275" Text="00:00" >
                 <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Black" Offset="0"/>
@@ -36,8 +36,8 @@
                     </LinearGradientBrush>
                 </TextBlock.Foreground>
             </TextBlock>
-            <TextBlock Name="tbStart" MouseUp="TextBlock_MouseUp" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="70" Margin="124,427,520,34" Width="156">启动</TextBlock>
-            <TextBlock Name="tbPause" Foreground="Gray" MouseUp="TextBlock_MouseUp_1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="70" Margin="573,427,73,42" Width="154">暂停</TextBlock>
+            <TextBlock Name="tbStart" MouseUp="TextBlock_MouseUp" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="70" Margin="129,402,515,42" Width="156">启动</TextBlock>
+            <TextBlock Name="tbPause" Foreground="Gray" MouseUp="TextBlock_MouseUp_1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="70" Margin="573,402,73,42" Width="154">暂停</TextBlock>
         </Grid>
 
     </StackPanel>

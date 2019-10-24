@@ -71,6 +71,7 @@ namespace Thuhelper
 
         private void Grd1_Loaded(object sender, RoutedEventArgs e)
         {
+            WindowHelpser.EnBlur(this.grd1);
             Inputbox i = new Inputbox();
             i.ShowDialog();
             double ret = Convert.ToDouble(i.Ret);

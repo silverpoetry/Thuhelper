@@ -1,0 +1,29 @@
+﻿<Window x:Class="Thuhelper.ScreenCapture"
+        KeyUp="Window_KeyUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Thuhelper"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        AllowDrop="False"
+        Title="ScreenCapture" Height="450" Width="1600"
+        Loaded="Window_Loaded"
+        WindowStyle="None"
+       
+        Left="0" Top="0"
+        Padding="0">
+
+    <Canvas MouseUp="Canvas_MouseUp" MouseMove="Canvas_MouseMove" MouseDown="Canvas_MouseDown" Width="auto" Height="auto">
+
+        <Image x:Name="asd" >
+            <Image.Effect>
+                <BlurEffect Radius="12" ></BlurEffect>
+            </Image.Effect>
+        </Image>
+        <Border CornerRadius="2" BorderThickness="1"  BorderBrush="Gold"  Name="bd"></Border>
+
+    </Canvas>
+  
+</Window>

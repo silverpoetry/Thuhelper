@@ -23,116 +23,7 @@ using System.IO;
 
 namespace Thuhelper
 {
-    public struct Rect
-    {
-        public int Left;
-        public int Top;
-        public int Right;
-        public int Bottom;
-    }
-    class WindowHelpser
-    {
-        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        public static extern IntPtr GetForegroundWindow();
-        [DllImport("user32.dll")]
-        public static extern int GetWindowTextLength(IntPtr hWnd);
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int nMaxCount);
-
-
-        [DllImport("user32.dll")]
-        private static extern int GetWindowRect(IntPtr hwnd, out Rect lpRect);
-
-
-        public static string GetForeWinText()
-        {
-            IntPtr hWnd = GetForegroundWindow();
-            int length = GetWindowTextLength(hWnd);
-            StringBuilder windowName = new StringBuilder(length + 1);
-            GetWindowText(hWnd, windowName, windowName.Capacity);
-            return windowName.ToString();
-            //"Program Manager"
-            //"Mainwindow"
-        }
-
-        public static IntPtr GetForeWindowHwnd()
-        {
-            IntPtr hWnd = GetForegroundWindow();
-
-            return hWnd;
-        }
-        public static int GetWindowHeight()
-        {
-            GetWindowRect(GetForeWindowHwnd(), out Rect r);
-            return r.Bottom - r.Top;
-        }
-
-
-
-
-    }
-
-    struct Event
-    {
-      public  string Name;
-        public int Xingqi;
-        public string Classroom;
-        public DateTime StartTime;
-        public DateTime EndTime;
-
-
-    }
-
-    /// <summary>
-    /// 可触摸滚动的ScrollViewer控件
-    /// </summary>
-    public class TouchableScrollViewer : ScrollViewer
-    {
-        //触摸点的坐标
-        Point _startPosition;
-        //滚动条当前位置
-        double _startVerticalOffset;
-        double _startHorizontalOffset;
-        public TouchableScrollViewer()
-        {
-            TouchDown += TouchableScrollViewer_TouchDown;
-
-            TouchUp += TouchableScrollViewer_TouchUp;
-        }
-        private void TouchableScrollViewer_TouchDown(object sender, TouchEventArgs e)
-        {
-            //添加触摸移动监听
-            TouchMove -= TouchableScrollViewer_TouchMove;
-            TouchMove += TouchableScrollViewer_TouchMove;
-
-            //获取ScrollViewer滚动条当前位置
-            _startVerticalOffset = VerticalOffset;
-            _startHorizontalOffset = HorizontalOffset;
-
-            //获取相对于ScrollViewer的触摸点位置
-            TouchPoint point = e.GetTouchPoint(this);
-            _startPosition = point.Position;
-        }
-
-        private void TouchableScrollViewer_TouchUp(object sender, TouchEventArgs e)
-        {
-            //注销触摸移动监听
-            TouchMove -= TouchableScrollViewer_TouchMove;
-        }
-
-        private void TouchableScrollViewer_TouchMove(object sender, TouchEventArgs e)
-        {
-            //获取相对于ScrollViewer的触摸点位置
-            TouchPoint endPoint = e.GetTouchPoint(this);
-            //计算相对位置
-            double diffOffsetY = endPoint.Position.Y - _startPosition.Y;
-            double diffOffsetX = endPoint.Position.X - _startPosition.X;
-            
-            //ScrollViewer滚动到指定位置(指定位置=起始位置-移动的偏移量，滚动方向和手势方向相反)
-            ScrollToVerticalOffset(_startVerticalOffset - diffOffsetY);
-            ScrollToHorizontalOffset(_startHorizontalOffset - diffOffsetX);
-        }
-    }
+   
 
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -142,7 +33,7 @@ namespace Thuhelper
 
         Event[] events=new Event[1000];
 
-       
+
         public MainWindow()
         {
             InitializeComponent();
@@ -150,11 +41,19 @@ namespace Thuhelper
            
         }
 
+
+
+
+
+
         [DllImport("user32", EntryPoint = "SetWindowLong")]
         public static extern int SetWindowLongA(int hwnd, int nIndex, int dwNewLong);
-
+        private HotKey _hotkey;
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            _hotkey = new HotKey(ModifierKeys.Control| ModifierKeys.Alt, System.Windows.Forms.Keys.A, this);
+            _hotkey.HotKeyPressed += (k) =>new  ScreenCapture().Show();
+
 
             #region Layout
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - this.ActualWidth - 10;
@@ -172,7 +71,7 @@ namespace Thuhelper
             grd1.Opacity = 0;
             scv.ScrollToVerticalOffset (btn_timer.Height);
 
-            Timer t = new Timer(100);
+            Timer t = new Timer(500);
             t.Elapsed += (a, b) => {
                 #region 失败的尝试
                 //      string s = GetForeWinText();
@@ -293,6 +192,11 @@ namespace Thuhelper
             t.Show();
         
 
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+           // Thuhelper.WindowHelpser.EnBlur(this.grd1);
         }
     }
 }
