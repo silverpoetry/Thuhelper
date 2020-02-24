@@ -1,0 +1,21 @@
+﻿<Window x:Class="Thuhelper.ScreenScene"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Thuhelper"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        Title="ScreenScene" Height="450" Width="800"
+        Topmost="True"
+        Loaded="Window_Loaded"
+        Left="0"
+        Top="0"
+        
+        WindowStyle="None"
+       
+     >
+    <Canvas Loaded="TextBox_Loaded" >
+        <Image Name="img" Source="C:\Users\weich\Desktop\Projecs\2019年9月26日 ThuHelper\Thuhelper\Thuhelper\bin\Debug\image\05e2299e-56da-452a-9839-4e9c4da126cb.jpg" Stretch="Fill" />
+    </Canvas>
+</Window>

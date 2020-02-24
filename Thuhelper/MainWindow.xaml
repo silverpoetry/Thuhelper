@@ -16,7 +16,7 @@
 
     <StackPanel HorizontalAlignment="Stretch"   Loaded="Grid_Loaded">
 
-        <TextBlock FontFamily="华文行楷" FontWeight="Bold"  x:Name="txt1" VerticalAlignment="Top" HorizontalAlignment="Right" 
+        <TextBlock FontFamily="华文行楷" FontWeight="Bold" MouseDown="txt1_MouseDown"  x:Name="txt1" VerticalAlignment="Top" HorizontalAlignment="Right" 
                    FontSize="60" MouseUp="Txt1_MouseUp" Background="#01FFFFFF">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="20"/>
