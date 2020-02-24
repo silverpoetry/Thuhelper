@@ -43,7 +43,7 @@ namespace Thuhelper
             {
                 timer.Stop();
                 fucked = true;
-                new Snapshotbutton().Show();
+               // new Snapshotbutton().Show();
                 
                 // Txt1_MouseUp(null, null);
                 //  TImer t = new TImer();
@@ -172,6 +172,7 @@ namespace Thuhelper
         bool state = true;
         private void Txt1_MouseUp(object sender, MouseButtonEventArgs e)
         {
+         
             if (fucked)
             {
                 fucked = false;
@@ -227,8 +228,14 @@ namespace Thuhelper
 
         private void txt1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-         //   lasttick = getTimeTicks();
-         //   isTitlePressed = true;
+            //   lasttick = getTimeTicks();
+            //   isTitlePressed = true;
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                //直接关闭
+                new Snapshotbutton().Show();
+                fucked = true;
+            }
             if (timer.Enabled==false)
             {
                 timer.Start();
