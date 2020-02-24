@@ -32,13 +32,31 @@ namespace Thuhelper
     {
 
         Event[] events=new Event[1000];
-
-
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 700 };
+        bool fucked = false;
+       
+  
         public MainWindow()
         {
             InitializeComponent();
-            
+            timer.Tick += (a, b) =>
+            {
+                timer.Stop();
+                fucked = true;
+                new Snapshotbutton().Show();
+                
+                // Txt1_MouseUp(null, null);
+                //  TImer t = new TImer();
+                //t.Show();
+
+
+
+            };
            
+        }
+        long getTimeTicks()
+        {
+            return DateTime.Now.Ticks/ 10000;
         }
 
 
@@ -48,14 +66,17 @@ namespace Thuhelper
 
         [DllImport("user32", EntryPoint = "SetWindowLong")]
         public static extern int SetWindowLongA(int hwnd, int nIndex, int dwNewLong);
-        private HotKey _hotkey;
+        private HotKey _hotkey, _hotkey2;
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             _hotkey = new HotKey(ModifierKeys.Control| ModifierKeys.Alt, System.Windows.Forms.Keys.A, this);
             _hotkey.HotKeyPressed += (k) =>new  ScreenCapture().Show();
 
+            _hotkey = new HotKey(ModifierKeys.Control, System.Windows.Forms.Keys.L, this);
+            _hotkey.HotKeyPressed += (k) => new ScreenScene().Show();
 
             #region Layout
+            
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - this.ActualWidth - 10;
             this.Top = 10;
 
@@ -151,6 +172,11 @@ namespace Thuhelper
         bool state = true;
         private void Txt1_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (fucked)
+            {
+                fucked = false;
+                return;
+            }
             if (state)
             {
                 DoubleAnimation D = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromMilliseconds(200)));
@@ -166,6 +192,11 @@ namespace Thuhelper
             }
             state = !state;
 
+            //清除长按计时器
+            if (timer.Enabled)
+            {
+                timer.Stop();
+            }
            
         }
         int getxq(int n )
@@ -192,6 +223,21 @@ namespace Thuhelper
             t.Show();
         
 
+        }
+
+        private void txt1_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+         //   lasttick = getTimeTicks();
+         //   isTitlePressed = true;
+            if (timer.Enabled==false)
+            {
+                timer.Start();
+            }
+            else
+            {
+                timer.Stop();
+                timer.Start();
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
