@@ -32,7 +32,7 @@ namespace Thuhelper
     {
 
         Event[] events=new Event[1000];
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 700 };
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 300 };
         bool fucked = false;
        
   
@@ -172,6 +172,7 @@ namespace Thuhelper
         bool state = true;
         private void Txt1_MouseUp(object sender, MouseButtonEventArgs e)
         {
+          //  System.Windows.Forms.MessageBox.Show("Test");
             if (fucked)
             {
                 fucked = false;
@@ -227,15 +228,16 @@ namespace Thuhelper
 
         private void txt1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-         //   lasttick = getTimeTicks();
-         //   isTitlePressed = true;
+            //   lasttick = getTimeTicks();
+            //   isTitlePressed = true;
+          //  System.Windows.Forms.MessageBox.Show("Test");
             if (timer.Enabled==false)
             {
                 timer.Start();
             }
             else
             {
-                timer.Stop();
+             //   timer.Stop();
                 timer.Start();
             }
         }
