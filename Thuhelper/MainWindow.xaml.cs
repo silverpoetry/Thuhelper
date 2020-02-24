@@ -32,7 +32,7 @@ namespace Thuhelper
     {
 
         Event[] events=new Event[1000];
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 300 };
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { Interval = 700 };
         bool fucked = false;
        
   
@@ -43,7 +43,7 @@ namespace Thuhelper
             {
                 timer.Stop();
                 fucked = true;
-                new Snapshotbutton().Show();
+               // new Snapshotbutton().Show();
                 
                 // Txt1_MouseUp(null, null);
                 //  TImer t = new TImer();
@@ -172,7 +172,7 @@ namespace Thuhelper
         bool state = true;
         private void Txt1_MouseUp(object sender, MouseButtonEventArgs e)
         {
-          //  System.Windows.Forms.MessageBox.Show("Test");
+         
             if (fucked)
             {
                 fucked = false;
@@ -230,14 +230,19 @@ namespace Thuhelper
         {
             //   lasttick = getTimeTicks();
             //   isTitlePressed = true;
-          //  System.Windows.Forms.MessageBox.Show("Test");
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                //直接关闭
+                new Snapshotbutton().Show();
+                fucked = true;
+            }
             if (timer.Enabled==false)
             {
                 timer.Start();
             }
             else
             {
-             //   timer.Stop();
+                timer.Stop();
                 timer.Start();
             }
         }

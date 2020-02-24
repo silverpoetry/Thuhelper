@@ -48,7 +48,13 @@ namespace Thuhelper
 
         private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = true;
+            //e.Handled = true;
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                //直接关闭
+                this.Close();
+                fucked = true;
+            }
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 x = this.Left;
