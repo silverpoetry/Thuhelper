@@ -10,6 +10,7 @@
         AllowDrop="False"
         Title="ScreenCapture" Height="450" Width="1600"
         Loaded="Window_Loaded"
+        ShowInTaskbar="False"
         WindowStyle="None"
        
         Left="0" Top="0"
