@@ -9,7 +9,7 @@
         AllowsTransparency="True"
         Title="MainWindow" Height="1000" Width="800"
         ShowInTaskbar="False"
-   
+    Closing="Window_Closing"
        Loaded="Window_Loaded"
         Background="Transparent"
         >
@@ -42,7 +42,16 @@
             <TextBlock Margin="0,0,50,0" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Name="txttime">sdfsdf</TextBlock>
             <ScrollViewer Name="scv" Margin="0,50,0,0" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" PanningMode="VerticalFirst"  Height="500" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Vertical" Name="stk">
-                    <Button Name="btn_timer" Background="Transparent" FontSize="40" Click="Button_Click"     Height="100" >Timer</Button>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition  />
+                            <ColumnDefinition  />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Name="btn_timer"  Click="Button_Click"  Background="Transparent" FontSize="40"   Height="100" >Timer</Button>
+                        <Button Grid.Column="1" Name="btn_open" Background="Transparent" FontSize="40" Click="Button_Click_1">启动服务器</Button>
+                    </Grid> 
+                 
+                    
                 </StackPanel>
             </ScrollViewer>
         </Grid>

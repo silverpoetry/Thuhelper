@@ -20,6 +20,9 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Windows.Interop;
 using System.IO;
+using System.Diagnostics;
+using System.Reflection;
+
 
 namespace Thuhelper
 {
@@ -61,7 +64,14 @@ namespace Thuhelper
 
 
 
-
+        //消息发送API
+        [DllImport("User32.dll", EntryPoint = "PostMessage")]
+        public static extern int PostMessage(
+            IntPtr hWnd,        // 信息发往的窗口的句柄
+            int Msg,            // 消息ID
+            int wParam,         // 参数1
+            int lParam            // 参数2
+        );
 
 
         [DllImport("user32", EntryPoint = "SetWindowLong")]
@@ -72,8 +82,9 @@ namespace Thuhelper
             _hotkey = new HotKey(ModifierKeys.Control| ModifierKeys.Alt, System.Windows.Forms.Keys.A, this);
             _hotkey.HotKeyPressed += (k) =>new  ScreenCapture().Show();
 
-            _hotkey = new HotKey(ModifierKeys.Control, System.Windows.Forms.Keys.L, this);
-            _hotkey.HotKeyPressed += (k) => new ScreenScene().Show();
+            //bing每日截图
+            //_hotkey = new HotKey(ModifierKeys.Control, System.Windows.Forms.Keys.L, this);
+            //_hotkey.HotKeyPressed += (k) => new ScreenScene().Show();
 
             #region Layout
             
@@ -87,7 +98,7 @@ namespace Thuhelper
 
             #endregion
             #region 加载
-            TimeSpan tt = DateTime.Now - new DateTime(2019, 9, 8);
+            TimeSpan tt = DateTime.Now - new DateTime(2020, 2, 1);
             this.txt1.Text = "第" + ((int)tt.TotalDays / 7 + 1).ToString() + "周";
             grd1.Opacity = 0;
             scv.ScrollToVerticalOffset (btn_timer.Height);
@@ -244,6 +255,60 @@ namespace Thuhelper
             {
                 timer.Stop();
                 timer.Start();
+            }
+        }
+        Process server_p;
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if ((string)btn_open.Content == "启动服务器")
+            {    
+                if (server_p != null && !server_p.HasExited) server_p.Kill();
+                server_p = new Process();
+                server_p.StartInfo.FileName = @"C:\Users\weich\Desktop\Tools\frp_0.33.0_windows_386\frpc.exe";
+                server_p.StartInfo.UseShellExecute = false;
+                server_p.StartInfo.RedirectStandardInput = true;
+                server_p.StartInfo.RedirectStandardOutput = true;
+                server_p.StartInfo.RedirectStandardError = true;
+                server_p.StartInfo.CreateNoWindow = true;
+                //目标目录
+                server_p.StartInfo.WorkingDirectory = @"C:\Users\weich\Desktop\Tools\frp_0.33.0_windows_386\";
+                server_p.Start();
+                server_p.OutputDataReceived += P_OutputDataReceived;
+                server_p.BeginOutputReadLine();
+                server_p.StandardInput.AutoFlush = true;
+               
+                System.Threading.Thread.Sleep(400);
+                MessageBox.Show(Lines.Last());
+                btn_open.Content = "关闭服务器";
+            }
+            else
+            {
+                if (server_p != null && !server_p.HasExited) server_p.Kill();
+                btn_open.Content = "启动服务器";
+            }
+
+        }
+
+        List<string> Lines=new List<string>();
+        private void P_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+            {
+                
+                Lines.Add(e.Data);
+            }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (server_p != null&&!server_p.HasExited)
+            {
+                server_p.Kill();
             }
         }
 

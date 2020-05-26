@@ -37,19 +37,19 @@ namespace Thuhelper
     /// </summary>
     public partial class ScreenCapture : Window
     {
-        int rate;
+        float rate;
         public ScreenCapture()
         {
             InitializeComponent();
            // System.Drawing.Rectangle rc = SystemInformation.VirtualScreen;
-             rate = (int)Graphics.FromHwnd(IntPtr.Zero).DpiX / 96;
+             rate = Graphics.FromHwnd(IntPtr.Zero).DpiX / 96;
             this.Width = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width / rate;
             this.Height = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height / rate;
             screenscource = ToBitmapSource(GetScreenSnapshot());
             asd.Source = screenscource;
-         //   asd.Width = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width / rate/2;
+            asd.Width = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width/rate ;
             //  System.Windows.Forms.MessageBox.Show();
-
+            
             //asd.Height = this.Height;
             // this.Background =new ImageBrush( ToBitmapSource(GetScreenSnapshot()));
         }
@@ -114,7 +114,7 @@ namespace Thuhelper
                     i.Source = b;
 
                     i.Clip = new RectangleGeometry();
-                    c = new CroppedBitmap(screenscource, new Int32Rect((int)p.X * rate, (int)p.Y * rate, ((int)p2.X - (int)p.X) * rate, ((int)p2.Y - (int)p.Y) * rate));
+                    c = new CroppedBitmap(screenscource, new Int32Rect((int)(p.X * rate), (int)(p.Y * rate), (int)(((int)p2.X - (int)p.X) * rate),(int)( ((int)p2.Y - (int)p.Y) * rate)));
                     bd.Background = new ImageBrush(c);
                 }
             }
